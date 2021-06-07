@@ -83,6 +83,22 @@ func (ol *OrderLine) SetBundlePrice(price float64) {
 	ol.setCustomField(7, price)
 }
 
+func (ol *OrderLine) SetIsCustomized(isCustomized bool) {
+	if isCustomized {
+		ol.setCustomField(8, "1")
+	} else {
+		ol.setCustomField(8, "0")
+	}
+}
+
+func (ol *OrderLine) SetLabelTypeTitle(labelTypeTitle string) {
+	ol.setCustomField(9, labelTypeTitle)
+}
+
+func (ol *OrderLine) SetPotTitle(potTitle string) {
+	ol.setCustomField(10, potTitle)
+}
+
 func intPtr(i int) *int {
 	return &i
 }
