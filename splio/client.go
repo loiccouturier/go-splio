@@ -34,6 +34,10 @@ type Client interface {
 	CreateProduct(product *Product) *ApiError
 	EditProduct(product *Product) *ApiError
 	GetProduct(productKey string) (*Product, *ApiError)
+
+	CreateStore(store *Store) *ApiError
+	EditStore(store *Store) *ApiError
+	GetStore(storeKey string) (*Store, *ApiError)
 }
 
 type client struct {
@@ -267,6 +271,44 @@ func (c *client) GetProduct(productKey string) (*Product, *ApiError) {
 	uri := fmt.Sprintf(apiUrl+"/data/v1/products/%s", productKey)
 
 	apiError := c.call(http.MethodGet, uri, &struct{}{}, &result, true)
+	if apiError != nil {
+		return nil, apiError
+	}
+
+	return &result, nil
+}
+
+func (c *client) CreateStore(store *Store) *ApiError {
+	var result Store
+
+	apiError := c.call(http.MethodPost, apiUrl+"/data/v1/stores", store, &result, true)
+	if apiError != nil {
+		return apiError
+	}
+
+	store = &result
+
+	return nil
+}
+
+func (c *client) EditStore(store *Store) *ApiError {
+	var result Store
+	store.ExternalId = nil
+
+	apiError := c.call(http.MethodPatch, fmt.Sprintf(apiUrl+"/data/v1/stores/%s", *store.ExternalId), store, &result, true)
+	if apiError != nil {
+		return apiError
+	}
+
+	store = &result
+
+	return nil
+}
+
+func (c *client) GetStore(storeKey string) (*Store, *ApiError) {
+	var result Store
+
+	apiError := c.call(http.MethodGet, fmt.Sprintf(apiUrl+"/data/v1/stores/%s", storeKey), &struct{}{}, &result, true)
 	if apiError != nil {
 		return nil, apiError
 	}
