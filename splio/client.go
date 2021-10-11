@@ -391,7 +391,7 @@ func (c *client) call(method, url string, body, result interface{}, needAuthenti
 			var apiError ApiError
 			err2 := json.Unmarshal(responseBody, &apiError)
 			if err2 != nil {
-				return &ApiError{Err: err2}
+				return &ApiError{Err: fmt.Errorf("unmarshal error for string %s. Err: %s", string(responseBody), err2.Error())}
 			}
 			apiError.Err = err
 			return &apiError
