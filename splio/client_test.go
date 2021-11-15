@@ -4,9 +4,9 @@ import (
 	"testing"
 )
 
-const universe = "bycharlot"
-const apiKey = "358033cc44200cb8069d73ff3bc9d26e23dd77a3865951619daeaa2ddf85778b"
-const testEmail = "loiccouturier@gmail.com"
+const universe = ""
+const apiKey = ""
+const testEmail = ""
 
 func TestClient_Authenticate(t *testing.T) {
 	client := NewClient(universe, "")
